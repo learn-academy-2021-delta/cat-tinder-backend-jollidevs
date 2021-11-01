@@ -46,3 +46,40 @@ CORS in Production
 When you take your app to production, you'll want to change the wildcard * to the URL that your frontend app is served from.
 
 $ bundle
+
+$rails routes
+
+
+app/controllers/chickens_controller.rb
+Update ChickensController to show methods
+
+/spec/requests/chickens_request_spec.rb
+add update it statement
+all tests will live between do and end
+using the test db to accomplish this actions
+creating an active record query to fill the empty db
+then pass the http verb to call upon a method in the ChickensController
+
+$rspec spec
+describe "GET /index" do
+run test on empty method then update method to pass test
+
+calling a param to send up the river
+check to see if the post got sent to database---200 response means success
+assign a variable to an active record query
+describe "POST /create" do
+# The params we are going to send with the request
+ # Send the request to the server
+ # Assure that we get a success back
+ # Look up the chicken we expect to be created in the db
+   # Assure that the created chicken has the correct attributes
+   #add strong params with the create method
+
+describe "PATCH /update" do   
+describe "DELETE /destroy" do
+    remember to reset variable
+   update and destory will need a parameter to be passed
+
+
+
+
