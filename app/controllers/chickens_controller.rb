@@ -1,0 +1,2 @@
+class ChickensController < ApplicationController
+end
