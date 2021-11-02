@@ -6,7 +6,11 @@ class ChickensController < ApplicationController
   
     def create
         chicken = Chicken.create(chicken_params)
-        render json: chicken
+        if chicken.valid?
+            render json: chicken
+        else
+            render json: chicken.errors, status: 422
+        end
     end
 
     def update

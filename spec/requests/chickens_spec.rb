@@ -74,4 +74,48 @@ RSpec.describe "Chickens", type: :request do
       expect(chickens).to be_empty
     end
   end
+
+  describe 'chicken validation error codes' do
+
+    it 'does not create a chicken without a name' do
+    chicken_params ={
+      chicken: {
+          age: 8,
+          enjoys: 'Likes to hike'
+      }
+    }
+    post '/chickens', params: chicken_params
+    expect(response.status).to eq 422
+    chicken = JSON.parse(response.body)
+    expect(chicken['name']).to include "can't be blank"
+    end
+    
+    it 'does not create a chicken without an age' do
+      chicken_params ={
+        chicken: {
+            name: 'Thighs',
+            enjoys: 'Likes to hike'
+        }
+      }
+      post '/chickens', params: chicken_params
+      expect(response.status).to eq 422
+      chicken = JSON.parse(response.body)
+      expect(chicken['age']).to include "can't be blank"
+      end
+
+      it 'does not create a chicken without an enjoys' do
+        chicken_params ={
+          chicken: {
+            name: 'Thighs',
+              age: 8
+          }
+        }
+        post '/chickens', params: chicken_params
+        expect(response.status).to eq 422
+        chicken = JSON.parse(response.body)
+        expect(chicken['enjoys']).to include "can't be blank"
+      end
+
+    end
+  
 end

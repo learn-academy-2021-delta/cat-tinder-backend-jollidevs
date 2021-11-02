@@ -53,6 +53,20 @@ $rails routes
 app/controllers/chickens_controller.rb
 Update ChickensController to show methods
 
+it 'does not update a chicken without an age' do
+      chicken_params ={
+        chicken: {
+            name: 'Thighs',
+            bank: "Wells Fargo',
+            enjoys: 'Likes to hike'
+        }
+      }
+      post '/chickens', params: chicken_params
+      expect(response.status).to eq 422
+      chicken = JSON.parse(response.body)
+      expect(chicken['age']).to include "can't be blank"
+      end
+
 /spec/requests/chickens_request_spec.rb
 add update it statement
 all tests will live between do and end
@@ -80,6 +94,40 @@ describe "DELETE /destroy" do
     remember to reset variable
    update and destory will need a parameter to be passed
 
+you know you are in request if you see plural
 
+Potential update validation answer
+it 'does not update a chicken without an enjoys' do
+        chicken_params ={
+          chicken: {
+            name: 'Thighs',
+            age: 8,
+            enjoys: 'Likes to hike'
+          }
+        }
+        post '/chickens', params: chicken_params
+        chicken = Chicken.first
+      
+        updated_chicken_params = {
+        chicken: {
+          name: 'Thighs',
+          age: 8
+        }
+      }
+        patch "/chickens/#{chicken.id}", params: updated_chicken_params
+        chicken = Chicken.first
+        expect(response.status).to eq 422
+        chicken = JSON.parse(response.body)
+        expect(chicken['enjoys']).to include "can't be blank"
+      end
 
+def update
+        chicken = Chicken.find(params[:id])
+        chicken.update(chicken_params)
+        if chicken.valid?
+            render json: chicken
+        else
+            render json: chicken.errors, status: 422
+        end
+    end
 
