@@ -131,3 +131,4 @@ def update
         end
     end
 
+Rspec testing to test without everything: rspec spec/requests/chickens_spec.rb

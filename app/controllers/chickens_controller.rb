@@ -16,7 +16,11 @@ class ChickensController < ApplicationController
     def update
         chicken = Chicken.find(params[:id])
         chicken.update(chicken_params)
-        render json: chicken
+        if chicken.valid?
+            render json: chicken
+        else
+            render json: chicken.errors, status: 422
+        end
     end
 
     def destroy
