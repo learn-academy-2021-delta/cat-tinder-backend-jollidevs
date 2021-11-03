@@ -9,17 +9,37 @@ chickens = [
     {
       name: "Biscuits",
       age: 5,
-      enjoys: "rooftops and trees"
+      enjoys: "Short flights to rooftops and trees"
     },
     {
       name: "Tender",
       age: 4,
-      enjoys: "crossing the road during rush hour"
+      enjoys: "Crossing the road during rush hour"
     },
     {
       name: "Roast",
       age: 2,
-      enjoys: "clucking until 2pm"
+      enjoys: "Clucking until 2pm"
+    },
+    {
+      name: "Cockdoodle",
+      age: 2,
+      enjoys: "Waking everyone up"
+    },
+    {
+      name: "Parmesan",
+      age: 4,
+      enjoys: "Hiding in trash cans"
+    },
+    {
+      name: "Fried",
+      age: 6,
+      enjoys: "Chasing children"
+    },
+    {
+      name: "Grill",
+      age: 16,
+      enjoys: "Keeping it lean and healthy"
     }
 ]
 

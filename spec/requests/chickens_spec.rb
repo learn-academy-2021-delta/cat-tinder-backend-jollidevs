@@ -58,7 +58,7 @@ RSpec.describe "Chickens", type: :request do
   
   describe "DELETE /destroy" do
     it 'deletes a chicken' do
-      # create the cat
+      # create the chicken
       chicken_params = {
         chicken: {
           name: 'Thighs',
@@ -115,7 +115,188 @@ RSpec.describe "Chickens", type: :request do
         chicken = JSON.parse(response.body)
         expect(chicken['enjoys']).to include "can't be blank"
       end
+    end
 
+        describe "cannot update a chicken without valid attributes" do
+    it 'cannot update a chicken without a name' do
+      chicken_params = {
+        chicken: {
+          name: 'Boo',
+          age: 2,
+          enjoys: 'cuddles and belly rubs'
+        }
+      }
+      post '/chickens', params: chicken_params
+      chicken = Chicken.first
+      chicken_params = {
+        chicken: {
+          name: '',
+          age: 2,
+          enjoys: 'cuddles and belly rubs'
+        }
+      }
+      patch "/chickens/#{chicken.id}", params: chicken_params
+      chicken = JSON.parse(response.body)
+      expect(response).to have_http_status(422)
+      expect(chicken['name']).to include "can't be blank"
+    end
+    it 'cannot update a chicken without a age' do
+      chicken_params = {
+        chicken: {
+          name: 'Boo',
+          age: 2,
+          enjoys: 'cuddles and belly rubs'
+        }
+      }
+      post '/chickens', params: chicken_params
+      chicken = Chicken.first
+      chicken_params = {
+        chicken: {
+          name: 'Boo',
+          age: '',
+          enjoys: 'cuddles and belly rubs'
+        }
+      }
+      patch "/chickens/#{chicken.id}", params: chicken_params
+      chicken = JSON.parse(response.body)
+      expect(response).to have_http_status(422)
+      expect(chicken['age']).to include "can't be blank"
+    end
+    it 'cannot update a chicken without an enjoys' do
+      chicken_params = {
+        chicken: {
+          name: 'Boo',
+          age: 2,
+          enjoys: 'cuddles and belly rubs'
+        }
+      }
+      post '/chickens', params: chicken_params
+      chicken = Chicken.first
+      chicken_params = {
+        chicken: {
+          name: 'Boo',
+          age: 2,
+          enjoys: '',
+        }
+      }
+      patch "/chickens/#{chicken.id}", params: chicken_params
+      chicken = JSON.parse(response.body)
+      expect(response).to have_http_status(422)
+      expect(chicken['enjoys']).to include "can't be blank"
+    end
+    it 'cannot update a chicken without an enjoys that is at least 10 characters' do
+      chicken_params = {
+        chicken: {
+          name: 'Boo',
+          age: 2,
+          enjoys: 'cuddles and belly rubs'
+        }
+      }
+      post '/chickens', params: chicken_params
+      chicken = Chicken.first
+      chicken_params = {
+        chicken: {
+          name: 'Boo',
+          age: 2,
+          enjoys: 'cuddles'
+        }
+      }
+      patch "/chickens/#{chicken.id}", params: chicken_params
+      chicken = JSON.parse(response.body)
+      expect(response).to have_http_status(422)
+      expect(chicken['enjoys']).to include 'is too short (minimum is 10 characters)'
+      end
+
+    end
+    describe "cannot update a chicken without valid attributes" do
+      it 'cannot update a chicken without a name' do
+        chicken_params = {
+          chicken: {
+            name: 'Boo',
+            age: 2,
+            enjoys: 'cuddles and belly rubs'
+          }
+        }
+        post '/chickens', params: chicken_params
+        chicken = Chicken.first
+        chicken_params = {
+          chicken: {
+            name: '',
+            age: 2,
+            enjoys: 'cuddles and belly rubs'
+          }
+        }
+        patch "/chickens/#{chicken.id}", params: chicken_params
+        chicken = JSON.parse(response.body)
+        expect(response).to have_http_status(422)
+        expect(chicken['name']).to include "can't be blank"
+      end
+      it 'cannot update a chicken without a age' do
+        chicken_params = {
+          chicken: {
+            name: 'Boo',
+            age: 2,
+            enjoys: 'cuddles and belly rubs'
+          }
+        }
+        post '/chickens', params: chicken_params
+        chicken = Chicken.first
+        chicken_params = {
+          chicken: {
+            name: 'Boo',
+            age: '',
+            enjoys: 'cuddles and belly rubs'
+          }
+        }
+        patch "/chickens/#{chicken.id}", params: chicken_params
+        chicken = JSON.parse(response.body)
+        expect(response).to have_http_status(422)
+        expect(chicken['age']).to include "can't be blank"
+      end
+      it 'cannot update a chicken without an enjoys' do
+        chicken_params = {
+          chicken: {
+            name: 'Boo',
+            age: 2,
+            enjoys: 'cuddles and belly rubs'
+          }
+        }
+        post '/chickens', params: chicken_params
+        chicken = Chicken.first
+        chicken_params = {
+          chicken: {
+            name: 'Boo',
+            age: 2,
+            enjoys: '',
+          }
+        }
+        patch "/chickens/#{chicken.id}", params: chicken_params
+        chicken = JSON.parse(response.body)
+        expect(response).to have_http_status(422)
+        expect(chicken['enjoys']).to include "can't be blank"
+      end
+      it 'cannot update a chicken without an enjoys that is at least 10 characters' do
+        chicken_params = {
+          chicken: {
+            name: 'Boo',
+            age: 2,
+            enjoys: 'cuddles and belly rubs'
+          }
+        }
+        post '/chickens', params: chicken_params
+        chicken = Chicken.first
+        chicken_params = {
+          chicken: {
+            name: 'Boo',
+            age: 2,
+            enjoys: 'cuddles'
+          }
+        }
+        patch "/chickens/#{chicken.id}", params: chicken_params
+        chicken = JSON.parse(response.body)
+        expect(response).to have_http_status(422)
+        expect(chicken['enjoys']).to include 'is too short (minimum is 10 characters)'
+      end
     end
   
 end
